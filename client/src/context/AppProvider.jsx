@@ -65,8 +65,7 @@ export const AppContextProvider = ({ children }) => {
   }, []);
 
   //Update Database Cart Items
-  useEffect(() => {
-    const updateCart = async () => {
+  const updateCart = async () => {
       try {
         const { data } = await axios.post("/api/cart/update", {
           userId: user._id,
@@ -74,13 +73,13 @@ export const AppContextProvider = ({ children }) => {
         });
 
         if (!data.success) {
-          toast.error(data.message);
+          console.log(data.message);
         }
       } catch (error) {
         toast.error(error.message);
       }
     };
-
+  useEffect(() => {
     if (user) {
       updateCart();
     }
