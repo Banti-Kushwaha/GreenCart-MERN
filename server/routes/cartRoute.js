@@ -1,6 +1,6 @@
-import authUser from "../middleware/authUser";
-import { updateCart } from "../controllers/cartController";
-import express from 'express';
+import authUser from "../middleware/authUser.js";
+import { updateCart } from "../controllers/cartController.js";
+import express from "express";
 
 const cartRouter = express.Router();
 

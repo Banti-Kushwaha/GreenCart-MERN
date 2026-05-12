@@ -14,7 +14,6 @@ import { stripeWebhooks } from './controllers/orderController.js';
 import cartRouter from './routes/cartRoute.js';
 
 const app = express();
-const port = process.env.PORT || 4000;
 
 connectDB();
 connectCloudinary();
