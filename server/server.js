@@ -7,10 +7,11 @@ import { userRouter } from './routes/userRoutes.js';
 import sellerRouter from './routes/sellerRoutes.js';
 import connectCloudinary from './configs/cloudinary.js';
 import productRouter from './routes/productRoute.js';
-import cartRouter from './routes/cartRoute.js';
+
 import addressRouter from './routes/addressRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import { stripeWebhooks } from './controllers/orderController.js';
+import cartRouter from './routes/cartRoute.js';
 
 const app = express();
 const port = process.env.PORT || 4000;
