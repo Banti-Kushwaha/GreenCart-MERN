@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useAppContext } from "../context/AppProvider";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [state, setState] = useState("login");
-  const { setShowUserLogin, setUser } = useAppContext();
+  const { setShowUserLogin, setUser, axios, navigate } = useAppContext();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -11,10 +12,22 @@ const Login = () => {
     password: "",
   });
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    setUser(formData);
-    setShowUserLogin(false);
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const { data } = await axios.post(`/api/user/${state}`, formData);
+
+      if (data.success) {
+        navigate("/");
+        setUser(data.user);
+        setShowUserLogin(false);
+        toast.success(data.message)
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleChange = (e) => {
@@ -22,12 +35,13 @@ const Login = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
- 
-
   return (
-    <div onClick={()=> setShowUserLogin(false)} className="fixed inset-0 w-200px z-30 flex items-center justify-center text-sm text-gray-600 bg-black/50">
+    <div
+      onClick={() => setShowUserLogin(false)}
+      className="fixed inset-0 w-200px z-30 flex items-center justify-center text-sm text-gray-600 bg-black/50"
+    >
       <form
-        onClick={(e)=>e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         onSubmit={handleSubmit}
         className="text-center bg-white border border-gray-800 rounded-2xl px-8 w-[30%] "
       >
@@ -39,12 +53,11 @@ const Login = () => {
 
         {state !== "login" && (
           <div className="flex items-center mt-6 w-full bg-white-800 border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">
-            
             <input
               type="text"
               name="name"
               placeholder="Name"
-              className="w-full bg-transparent text-white placeholder:text-black-400 border-none outline-none "
+              className="w-full bg-transparent text-black placeholder:text-black-400 border-none outline-none "
               value={formData.name}
               onChange={handleChange}
               required
@@ -53,12 +66,11 @@ const Login = () => {
         )}
 
         <div className="flex items-center w-full mt-4 bg-white-800 border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">
-          
           <input
             type="email"
             name="email"
             placeholder="Email id"
-            className="w-full bg-transparent text-white placeholder-gray-400 border-none outline-none "
+            className="w-full bg-transparent text-black placeholder-gray-400 border-none outline-none "
             value={formData.email}
             onChange={handleChange}
             required
@@ -66,12 +78,11 @@ const Login = () => {
         </div>
 
         <div className=" flex items-center mt-4 w-full bg-white-800 border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">
-          
           <input
             type="password"
             name="password"
             placeholder="Password"
-            className="w-full bg-transparent text-white placeholder-gray-400 border-none outline-none"
+            className="w-full bg-transparent text-black placeholder-gray-400 border-none outline-none"
             value={formData.password}
             onChange={handleChange}
             required
@@ -100,9 +111,7 @@ const Login = () => {
           {state === "login"
             ? "Don't have an account?"
             : "Already have an account?"}
-          <span className="text-primary hover:underline ml-1">
-            click here
-          </span>
+          <span className="text-primary hover:underline ml-1">click here</span>
         </p>
       </form>
     </div>

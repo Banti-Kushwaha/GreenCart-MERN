@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppProvider";
 import { Link, useParams } from "react-router-dom";
 import { assets } from "../assets/assets";
+import ProductCart from "../components/ProductCard";
 
 const ProductDetail = () => {
   const { products, navigate, currency, addToCart } = useAppContext();
@@ -34,7 +35,7 @@ const ProductDetail = () => {
             {" "}
             {product.category}
           </Link>{" "}
-          /<span className="text-indigo-500"> {product.name}</span>
+          /<span className="text-primary"> {product.name}</span>
         </p>
 
         <div className="flex flex-col md:flex-row gap-16 mt-4">
@@ -107,7 +108,7 @@ const ProductDetail = () => {
                   addToCart(product._id);
                   navigate("/cart");
                 }}
-                className="w-full py-3.5 cursor-pointer font-medium bg-primary-500 text-white hover:bg-primary-600 transition"
+                className="w-full py-3.5 cursor-pointer font-medium bg-primary text-white hover:bg-primary transition"
               >
                 Buy now
               </button>
@@ -118,9 +119,17 @@ const ProductDetail = () => {
         {/* ------------------related products ------------- */}
         <div className="flex flex-col items-center mt-20">
            <div className="flex flex-col items-center w-max">
-              <p>Related Products</p>
+              <p className="text-3xl font-medium">Related Products</p>
               <div className="w-20 h-0.5 bg-primary rounded-full mt-2"></div>
            </div>
+           <div>
+            {relatedProducts.filter((product) => product.inStock).map((product, index)=>(
+              <ProductCart key={index} product={product} />
+            ))}
+           </div>
+           <button onClick={() => {navigate("/products"); scrollTo(0,0)}} className="mx-auto cursor-pointer px-12 my-16 py-2.5 border rounded text-primary hover:bg-primary/10 transition">
+            See more
+           </button>
         </div>
       </div>
     )
