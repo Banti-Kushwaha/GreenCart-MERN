@@ -15,8 +15,8 @@ import cartRouter from './routes/cartRoute.js';
 
 const app = express();
 
-connectDB();
-connectCloudinary();
+await connectDB();
+await connectCloudinary();
 
 //Allow multiple origins
 // const allowedOrigins = [
