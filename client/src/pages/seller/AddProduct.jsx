@@ -10,11 +10,13 @@ const AddProduct = () => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [offerPrice, setOfferPrice] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { axios } = useAppContext();
 
   const onSubmitHandler = async (e) => {
     try {
+      setLoading(true);
       e.preventDefault();
 
       const productData = {
@@ -40,12 +42,14 @@ const AddProduct = () => {
         setCategory("");
         setPrice("");
         setOfferPrice("");
-        setFiles("");
+        setFiles([]);
       } else {
         toast.error(data.message);
       }
+      setLoading(false);
     } catch (error) {
       toast.error(error.message);
+      setLoading(false);
     }
   };
   return (
@@ -92,6 +96,7 @@ const AddProduct = () => {
             Product Name
           </label>
           <input
+            value={name}
             onChange={(e) => setName(e.target.value)}
             id="product-name"
             type="text"
@@ -108,6 +113,7 @@ const AddProduct = () => {
             Product Description
           </label>
           <textarea
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
             id="product-description"
             rows={4}
@@ -120,6 +126,7 @@ const AddProduct = () => {
             Category
           </label>
           <select
+            value={category}
             onChange={(e) => setCategory(e.target.value)}
             id="category"
             className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
@@ -138,6 +145,7 @@ const AddProduct = () => {
               Product Price
             </label>
             <input
+              value={price}
               onChange={(e) => setPrice(e.target.value)}
               id="product-price"
               type="number"
@@ -151,6 +159,7 @@ const AddProduct = () => {
               Offer Price
             </label>
             <input
+              value={offerPrice}
               onChange={(e) => setOfferPrice(e.target.value)}
               id="offer-price"
               type="number"
@@ -160,8 +169,16 @@ const AddProduct = () => {
             />
           </div>
         </div>
-        <button className="px-8 py-2.5 bg-primary text-white font-medium rounded cursor-pointer">
-          ADD
+        <button
+          disabled={loading}
+          className={`px-8 py-2.5 text-white font-medium rounded
+  ${
+    loading
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-primary cursor-pointer hover:bg-primary/90"
+  }`}
+        >
+          {loading ? "Adding..." : "ADD"}
         </button>
       </form>
     </div>

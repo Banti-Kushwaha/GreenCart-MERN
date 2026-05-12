@@ -38,7 +38,7 @@ const SellerLayout = () => {
           <img
             src={assets.logo}
             alt="Logo"
-            className="cursor-pointer w-34 md:w-38"
+            className="h-12 object-contain cursor-pointer"
           />
         </Link>
         <div className="flex items-center gap-5 text-gray-500">

@@ -47,16 +47,16 @@ const ProductDetail = () => {
                   onClick={() => setThumbnail(image)}
                   className="border max-w-24 border-gray-500/30 rounded overflow-hidden cursor-pointer"
                 >
-                  <img src={image} alt={`Thumbnail ${index }`} />
+                  <img src={image} alt={`Thumbnail ${index}`} />
                 </div>
               ))}
             </div>
 
-            <div className="border border-gray-500/30 max-w-100 rounded overflow-hidden">
+            <div className="border border-gray-500/30 w-[450px] h-[490px] rounded overflow-hidden">
               <img
                 src={thumbnail}
                 alt="Selected product"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
           </div>
@@ -118,18 +118,29 @@ const ProductDetail = () => {
 
         {/* ------------------related products ------------- */}
         <div className="flex flex-col items-center mt-20">
-           <div className="flex flex-col items-center w-max">
-              <p className="text-3xl font-medium">Related Products</p>
-              <div className="w-20 h-0.5 bg-primary rounded-full mt-2"></div>
-           </div>
-           <div>
-            {relatedProducts.filter((product) => product.inStock).map((product, index)=>(
-              <ProductCart key={index} product={product} />
-            ))}
-           </div>
-           <button onClick={() => {navigate("/products"); scrollTo(0,0)}} className="mx-auto cursor-pointer px-12 my-16 py-2.5 border rounded text-primary hover:bg-primary/10 transition">
+          <div className="flex flex-col items-center w-max">
+            <p className="text-3xl font-medium">Related Products</p>
+
+            <div className="w-20 h-0.5 bg-primary rounded-full mt-2"></div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+            {relatedProducts
+              .filter((product) => product.inStock)
+              .map((product, index) => (
+                <ProductCart key={index} product={product} />
+              ))}
+          </div>
+
+          <button
+            onClick={() => {
+              navigate("/products");
+              scrollTo(0, 0);
+            }}
+            className="mx-auto cursor-pointer px-12 my-16 py-2.5 border rounded text-primary hover:bg-primary/10 transition"
+          >
             See more
-           </button>
+          </button>
         </div>
       </div>
     )
