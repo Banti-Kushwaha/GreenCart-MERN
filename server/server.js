@@ -19,9 +19,9 @@ await connectDB()
 await connectCloudinary()
 
 //Allow multiple origins
-// const allowedOrigins = [
-//     "https://green-cart-mern-967a.vercel.app"
-// ]
+const allowedOrigins = [
+    "https://green-cart-mern-967a.vercel.app"
+]
 
 app.post('/stripe', express.raw({type: 'application/json'}), stripeWebhooks);
 
@@ -30,7 +30,7 @@ app.post('/stripe', express.raw({type: 'application/json'}), stripeWebhooks);
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: true,
+    origin: allowedOrigins,
     credentials: true
 }));
 
