@@ -16,8 +16,8 @@ import cartRouter from './routes/cartRoute.js';
 const app = express();
 const port = process.env.PORT || 4000;
 
-await connectDB()
-await connectCloudinary()
+connectDB();
+connectCloudinary();
 
 //Allow multiple origins
 // const allowedOrigins = [
