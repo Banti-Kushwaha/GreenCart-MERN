@@ -46,23 +46,39 @@ export const AppContextProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-    const fetchSeller = async () => {
-      try {
-        const { data } = await axios.get("/api/seller/is-auth");
-        if (data.success) {
-          setIsSeller(true);
-        } else {
-          setIsSeller(false);
-        }
-      } catch (error) {
+
+  const fetchSeller = async () => {
+    try {
+      const { data } = await axios.get("/api/seller/is-auth");
+
+      if (data.success) {
+        setIsSeller(true);
+      } else {
         setIsSeller(false);
-        console.log(error.message);
       }
-    };
-    fetchUser();
+
+    } catch (error) {
+      setIsSeller(false);
+      console.log(error.message);
+    }
+  };
+
+  // Check current page
+  const path = window.location.pathname;
+
+  // Seller pages
+  if (path.includes("/seller")) {
     fetchSeller();
-    fetchProducts();
-  }, []);
+  }
+
+  // User pages
+  else {
+    fetchUser();
+  }
+
+  fetchProducts();
+
+}, []);
 
   //Update Database Cart Items
   const updateCart = async () => {
