@@ -39,7 +39,7 @@ export const AppContextProvider = ({ children }) => {
       if (data.success) {
         setProducts(data.products);
       } else {
-        toast.error(data.message);
+        console.log(data.message);
       }
     } catch (error) {
       toast.error(error.message);
@@ -76,14 +76,14 @@ export const AppContextProvider = ({ children }) => {
           console.log(data.message);
         }
       } catch (error) {
-        toast.error(error.message);
-      }
+  console.log(error.message);
+}
     };
   useEffect(() => {
-    if (user) {
-      updateCart();
-    }
-  }, [cartItems]);
+  if (user && Object.keys(cartItems).length > 0) {
+    updateCart();
+  }
+}, [cartItems]);
 
   //Add Product to Cart
   const addToCart = (itemId) => {
